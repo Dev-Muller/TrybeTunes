@@ -6,7 +6,6 @@ import Carregando from './Carregando';
 class Header extends React.Component {
   state = {
     loading: false,
-    loaded: false,
     user: {},
   };
 
@@ -17,11 +16,11 @@ class Header extends React.Component {
   getUserInfo = async () => {
     this.setState({ loading: true });
     const usuario = await getUser();
-    this.setState({ loading: false, loaded: true, user: usuario });
+    this.setState({ loading: false, user: usuario });
   };
 
   render() {
-    const { loading, loaded, user } = this.state;
+    const { loading, user } = this.state;
     return (
       <header data-testid="header-component">
         <nav>
@@ -38,11 +37,9 @@ class Header extends React.Component {
             <li><Link to="/profile" data-testid="link-to-profile">Profile</Link></li>
           </ul>
         </nav>
+        { loading && <Carregando /> }
         <div>
-          { loading && <Carregando /> }
-          <p data-testid="header-user-name">
-            { loaded && <p>{ user.name }</p> }
-          </p>
+          <p data-testid="header-user-name">{ user.name }</p>
         </div>
       </header>
     );
