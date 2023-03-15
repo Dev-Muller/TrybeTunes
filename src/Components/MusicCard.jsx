@@ -1,28 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Carregando from './Carregando';
 
 class MusicCard extends Component {
   state = {
     loading: false,
-    // songList: [],
+    favorite: false,
   };
 
-  componentDidMount() {
-    // this.getSong();
+  async componentDidMount() {
+    const { music } = this.props;
+    this.setState({ loading: true });
+    const favSong = await getFavoriteSongs();
+    this.setState({ loading: false });
+    if (favSong.some((fav) => (fav.trackName === music.trackName))) {
+      this.setState({ favorite: true });
+    }
   }
 
-  getSong = async (song) => {
-    this.setState({ loading: true });
-    // const add =
-    await addSong(song);
-    this.setState({ loading: false });
+  getAddSong = async () => {
+    const { music } = this.props;
+    const { favorite } = this.state;
+    if (favorite) {
+      this.setState({ loading: true });
+      await addSong(music);
+      this.setState({ loading: false });
+    }
+  };
+
+  removeFavSong = async () => {
+    const { music } = this.props;
+    const { favorite } = this.state;
+    if (!favorite) {
+      this.setState({ loading: true });
+      await removeSong(music);
+      this.setState({ loading: false });
+    }
+  };
+
+  onInputChange = ({ target }) => {
+    const { checked, name } = target;
+    this.setState({ [name]: checked }, () => {
+      this.getAddSong();
+      this.removeFavSong();
+    });
   };
 
   render() {
     const { music } = this.props;
-    const { loading } = this.state;
+    const { loading, favorite } = this.state;
     return (
       <div>
         { loading && <Carregando /> }
@@ -31,9 +58,10 @@ class MusicCard extends Component {
           <input
             type="checkbox"
             name="favorite"
+            checked={ favorite }
             id=""
             data-testid={ `checkbox-music-${music.trackId}` }
-            onClick={ () => this.getSong(music) }
+            onChange={ this.onInputChange }
           />
           Favorite
         </label>
