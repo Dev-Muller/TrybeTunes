@@ -22,7 +22,10 @@ class Album extends React.Component {
         <Header />
         <div data-testid="page-album">
           <h2 data-testid="artist-name">{ list[0].artistName }</h2>
-          <h3 data-testid="album-name">{ list[0].collectionName }</h3>
+          <h3 data-testid="album-name">
+            <img src={ list[0].artworkUrl60 } alt="" />
+            { list[0].collectionName }
+          </h3>
           { list.slice(1).map((music) => (
             <MusicCard key={ music.trackId } music={ music } />
           )) }

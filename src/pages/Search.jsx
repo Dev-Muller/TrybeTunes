@@ -41,22 +41,24 @@ class Search extends React.Component {
         <div data-testid="page-search">
           { loading && <Carregando /> }
           <form action="">
-            <input
-              name="name"
-              type="text"
-              value={ name }
-              data-testid="search-artist-input"
-              onChange={ this.onInputChange }
-              placeholder="Nome do Artista"
-            />
-            <button
-              disabled={ disabled }
-              type="button"
-              data-testid="search-artist-button"
-              onClick={ this.handlerBtn }
-            >
-              Pesquisar
-            </button>
+            <label htmlFor="">
+              <input
+                name="name"
+                type="text"
+                value={ name }
+                data-testid="search-artist-input"
+                onChange={ this.onInputChange }
+                placeholder="Nome do Artista"
+              />
+              <button
+                disabled={ disabled }
+                type="button"
+                data-testid="search-artist-button"
+                onClick={ this.handlerBtn }
+              >
+                Pesquisar
+              </button>
+            </label>
           </form>
           { result && <p>{ `Resultado de álbuns de: ${nameInput}` }</p>}
           <ul>

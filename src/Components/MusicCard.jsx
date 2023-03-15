@@ -7,6 +7,10 @@ class MusicCard extends Component {
     return (
       <div>
         <p>{ music.trackName }</p>
+        <label htmlFor="">
+          <input type="checkbox" name="favorite" id="" />
+          Favorite
+        </label>
         <audio data-testid="audio-component" src={ music.previewUrl } controls>
           <track kind="captions" />
           <code>audio</code>
