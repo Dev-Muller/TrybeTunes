@@ -73,6 +73,7 @@ class Search extends React.Component {
                     to={ `/album/${album.collectionId}` }
                   >
                     {album.collectionName}
+                    <img src={ album.artworkUrl100 } alt="" />
                   </Link>
                 </li>
               )) }
