@@ -42,8 +42,10 @@ class MusicCard extends Component {
   onInputChange = ({ target }) => {
     const { checked, name } = target;
     this.setState({ [name]: checked }, () => {
+      const { update } = this.props;
       this.getAddSong();
       this.removeFavSong();
+      update();
     });
   };
 
@@ -54,16 +56,16 @@ class MusicCard extends Component {
       <div>
         { loading && <Carregando /> }
         <p>{ music.trackName }</p>
-        <label htmlFor="">
+        <label htmlFor="favorita">
           <input
             type="checkbox"
             name="favorite"
             checked={ favorite }
-            id=""
+            id="favorita"
             data-testid={ `checkbox-music-${music.trackId}` }
             onChange={ this.onInputChange }
           />
-          Favorite
+          Favorita
         </label>
         <audio data-testid="audio-component" src={ music.previewUrl } controls>
           <track kind="captions" />
@@ -80,6 +82,9 @@ MusicCard.propTypes = {
     previewUrl: PropTypes.string.isRequired,
     trackId: PropTypes.number.isRequired,
   }).isRequired,
+  update: PropTypes.func,
 };
+
+MusicCard.defaultProps = { update: () => {} };
 
 export default MusicCard;
