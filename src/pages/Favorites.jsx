@@ -28,7 +28,7 @@ class Favorites extends React.Component {
       <div>
         <Header />
         { loading && <Carregando />}
-        <div data-testid="page-album">
+        <div data-testid="page-favorites">
           { list.map((music) => (
             <MusicCard
               key={ music.trackId }
